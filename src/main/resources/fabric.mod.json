@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "polar-mod",
+  "version": "${version}",
+  "name": "Polar Mod",
+  "description": "A cool semi-transparent GUI mod with client features and utilities",
+  "authors": [
+    "you"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/tintelvalentijn/fabric-mod-1.21.11"
+  },
+  "license": "MIT",
+  "icon": "assets/polar-mod/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.example.polar.PolarMod"
+    ],
+    "client": [
+      "com.example.polar.client.PolarClientMod"
+    ]
+  },
+  "mixins": [
+    "polar-mod.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}
