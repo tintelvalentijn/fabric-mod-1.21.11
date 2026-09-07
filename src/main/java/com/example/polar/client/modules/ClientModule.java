@@ -15,11 +15,11 @@ public class ClientModule {
     private static boolean guiOpen = false;
     
     public static void init() {
-        // Register keybinding
+        // Register keybinding - RIGHT_SHIFT
         guiKeybind = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.polar-mod.gui",
             InputUtil.Type.KEYSYM,
-            GLFW.GLFW_KEY_G,
+            GLFW.GLFW_KEY_RIGHT_SHIFT,
             "category.polar-mod"
         ));
         
@@ -34,7 +34,7 @@ public class ClientModule {
             }
         });
         
-        PolarClientMod.LOGGER.info("Client Module initialized!");
+        PolarClientMod.LOGGER.info("Client Module initialized with RIGHT_SHIFT keybind!");
     }
     
     public static void openGui() {
