@@ -12,8 +12,8 @@ group = project.maven_group
 
 repositories {
 	mavenCentral()
-	maven { url = 'https://api.modrinth.com/maven' }
 	maven { url = 'https://maven.fabricmc.net/' }
+	maven { url = 'https://api.modrinth.com/maven' }
 }
 
 dependencies {
@@ -21,19 +21,11 @@ dependencies {
 	mappings loom.officialMojangMappings()
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-	// Shader Libraries
-	modImplementation "maven.modrinth:iris:1.7.0+mc1.21.1"
-	modImplementation "maven.modrinth:sodium:0.6.0+mc1.21.1"
-
-	// Font Rendering
-	modImplementation "maven.modrinth:mods4j:1.0.0"
 }
 
 processResources {
 	inputs.property "version", project.version
-
-inputs.property "minecraft_version", project.minecraft_version
+	inputs.property "minecraft_version", project.minecraft_version
 	inputs.property "loader_version", project.loader_version
 
 	filesMatching("fabric.mod.json") {
@@ -57,6 +49,10 @@ jar {
 	}
 }
 
-publishingPlugin {
-	repoDir = file("${project.projectDir}/../maven")
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
 }
