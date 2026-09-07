@@ -1,0 +1,19 @@
+{
+  "blend": "add",
+  "vertex": "rendertype_gui",
+  "fragment": "rendertype_gui",
+  "attributes": [
+    "Position",
+    "Color",
+    "UV0"
+  ],
+  "samplers": [
+    "Sampler0"
+  ],
+  "uniforms": [
+    { "name": "ProjMat", "type": "matrix4x4", "count": 16 },
+    { "name": "ModelViewMat", "type": "matrix4x4", "count": 16 },
+    { "name": "ColorModulator", "type": "float", "count": 4 },
+    { "name": "SmoothAmount", "type": "float", "count": 1 }
+  ]
+}
