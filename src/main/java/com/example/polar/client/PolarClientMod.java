@@ -7,6 +7,8 @@ import com.example.polar.client.config.ModConfig;
 import com.example.polar.client.modules.ClientModule;
 import com.example.polar.client.modules.RenderModule;
 import com.example.polar.client.modules.MovementModule;
+import com.example.polar.client.shader.ShaderManager;
+import com.example.polar.client.font.FontManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +24,10 @@ public class PolarClientMod implements ClientModInitializer {
         // Initialize config
         CONFIG = new ModConfig();
         CONFIG.load();
+        
+        // Initialize shaders and fonts
+        ShaderManager.initializeShaders();
+        FontManager.initializeFonts();
         
         // Initialize modules
         ClientModule.init();

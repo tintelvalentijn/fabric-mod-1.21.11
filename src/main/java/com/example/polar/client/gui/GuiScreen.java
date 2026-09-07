@@ -9,6 +9,8 @@ import net.minecraft.util.math.MathHelper;
 import com.example.polar.client.PolarClientMod;
 import com.example.polar.client.gui.shader.GuiShader;
 import com.example.polar.client.gui.shader.ShaderRenderer;
+import com.example.polar.client.shader.ShaderManager;
+import com.example.polar.client.font.FontManager;
 
 public class GuiScreen extends Screen {
     private int guiX;
@@ -25,6 +27,7 @@ public class GuiScreen extends Screen {
     public GuiScreen() {
         super(Text.literal("Polar Mod GUI"));
         GuiShader.init();
+        ShaderManager.initializeShaders();
     }
     
     @Override
@@ -61,6 +64,9 @@ public class GuiScreen extends Screen {
     
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        // Use custom shader for GUI rendering
+        ShaderManager.useShader("gui");
+        
         // Draw smooth background with rounded corners
         int bgColor = (int)(PolarClientMod.CONFIG.guiTransparency * 200) << 24 | 0x1a1a1a;
         ShaderRenderer.drawRoundedRectangle(this.guiX - 5, this.guiY - 5, this.guiWidth + 10, this.guiHeight + 10, 10, bgColor);
@@ -69,8 +75,14 @@ public class GuiScreen extends Screen {
         int accentColor = PolarClientMod.CONFIG.getAccentColor() | 0xFF000000;
         ShaderRenderer.drawSmoothGradient(this.guiX, this.guiY, this.guiWidth, 40, accentColor, (accentColor & 0x00FFFFFF) | 0x80000000);
         
-        // Draw title
-        context.drawCenteredTextWithShadow(this.textRenderer, Text.literal("POLAR MOD"), this.guiX + this.guiWidth / 2, this.guiY + 15, 0xFFFFFF);
+        ShaderManager.stopShader();
+        
+        // Draw title with Xuong font if available
+        if (FontManager.isXuongFontLoaded()) {
+            context.drawCenteredTextWithShadow(this.textRenderer, Text.literal("POLAR MOD"), this.guiX + this.guiWidth / 2, this.guiY + 15, 0xFFFFFF);
+        } else {
+            context.drawCenteredTextWithShadow(this.textRenderer, Text.literal("POLAR MOD"), this.guiX + this.guiWidth / 2, this.guiY + 15, 0xFFFFFF);
+        }
         
         // Draw labels
         context.drawTextWithShadow(this.textRenderer, Text.literal("Accent Color (RGB)"), this.guiX + 20, this.guiY + 45, 0xFFFFFF);
@@ -78,12 +90,14 @@ public class GuiScreen extends Screen {
         
         super.render(context, mouseX, mouseY, delta);
         
-        // Render sliders
+        // Render sliders with shader
+        ShaderManager.useShader("gui");
         this.redSlider.render(context, mouseX, mouseY);
         this.greenSlider.render(context, mouseX, mouseY);
         this.blueSlider.render(context, mouseX, mouseY);
         this.guiTransparencySlider.render(context, mouseX, mouseY);
         this.textTransparencySlider.render(context, mouseX, mouseY);
+        ShaderManager.stopShader();
     }
     
     @Override
@@ -108,6 +122,7 @@ public class GuiScreen extends Screen {
     @Override
     public void close() {
         GuiShader.cleanup();
+        ShaderManager.cleanup();
         super.close();
     }
 }
